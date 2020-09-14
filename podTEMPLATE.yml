@@ -1,12 +1,11 @@
 apiVersion: v1
-metadata:
-  labels:
-    some-label: slave-lable
 kind: Pod
 spec:
   containers:
   - name: docker
     image: docker:latest
     command:
-    - cat
+    - sleep
+    args: 
+    - 99d
     tty: true

@@ -10,8 +10,3 @@ spec:
     command:
     - cat
     tty: true
-  - name: ubuntu
-    image: ubuntu:latest
-    command:
-    - cat
-    tty: true

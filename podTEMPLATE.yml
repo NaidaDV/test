@@ -9,3 +9,9 @@ spec:
     args: 
     - 99d
     tty: true
+  - name: ubuntu
+    image: ubuntu
+    command:
+    - sleep
+    args: 
+    - infinity

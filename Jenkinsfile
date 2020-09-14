@@ -29,9 +29,9 @@ pipeline {
                     }
                     // sh 'sleep 3000'
                     sh 'docker images'
-                    }
                 }
             }
+        }
         
     
 }

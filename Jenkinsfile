@@ -5,7 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Build artifact') {
+        stage ('Build artifact') {
             agent { label 'master' }
             steps {
                     git 'https://github.com/americans007/react-app'
@@ -14,7 +14,7 @@ pipeline {
             }
         }
         
-        stage('Build image') {
+        stage ('Build image') {
             agent { kubernetes { yamlFile 'podTEMPLATE.yml' } }
             steps {
                 container('docker') {

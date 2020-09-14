@@ -1,7 +1,8 @@
 pipeline {
     agent { 
         kubernetes { 
-            yamlFile 'podTEMPLATE.yml' 
+            yamlFile 'podTEMPLATE.yml'
+            defaultContainer 'ubuntu'
         } 
     }
     
@@ -12,12 +13,10 @@ pipeline {
     stages {
         stage ('Build artifact') {
             steps {
-                container('docker') {
                     git 'https://github.com/americans007/react-app'
                     
                     sh 'npm install'
                     sh 'npm run build'
-                }
             }
         }
         

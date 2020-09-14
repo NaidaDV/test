@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: shell
+  - name: docker
     image: docker
     command:
     - sleep

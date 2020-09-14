@@ -9,8 +9,9 @@ pipeline {
     tools {
         nodejs "nodejs 14"
     }
-
+    
     stages {
+        node(POD_LABEL) {
         stage ('Build artifact') {
             steps {
                     git 'https://github.com/americans007/react-app'
@@ -19,6 +20,7 @@ pipeline {
                     sh 'npm run build'
             }
         }
+    }
         
         stage ('Build image') {
             steps {

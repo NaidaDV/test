@@ -1,9 +1,5 @@
 pipeline {
-    agent { 
-        kubernetes { 
-            yamlFile 'podTEMPLATE.yml'
-        } 
-    }
+    agent none
     
     tools {
         nodejs "nodejs 14"
@@ -11,8 +7,17 @@ pipeline {
     
     stages {
         
-        node(POD_LABEL) {
         stage ('Build artifact') {
+            agent { 
+                kubernetes { 
+                    containerTemplate { 
+                        name 'ubuntu'
+                        image 'ubuntu:latest' 
+                        ttyEnabled true 
+                        command 'cat' 
+                    } 
+                } 
+            }
             steps {
                 container('ubuntu') {
                     git 'https://github.com/americans007/react-app'
@@ -21,11 +26,18 @@ pipeline {
                 }
             }
         }
-        }
         
-        
-        node(POD_LABEL) {
         stage ('Build image') {
+            agent { 
+                kubernetes { 
+                    containerTemplate { 
+                        name 'docker'
+                        image 'docker:latest' 
+                        ttyEnabled true 
+                        command 'cat' 
+                    } 
+                } 
+            }
             steps {
                 container('docker') {
                     sh 'docker build --tag "image:build_${env.BUILD_ID}"'
@@ -33,7 +45,6 @@ pipeline {
                     sh 'docker images'
                 }
             }
-        }
         }
     }
 }

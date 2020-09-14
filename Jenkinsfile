@@ -7,7 +7,6 @@ pipeline {
 
     tools {
         nodejs "nodejs 14"
-        //docker "docker:latest"
     }
 
     stages {
@@ -24,9 +23,7 @@ pipeline {
         stage('Build image') {
             steps {
                 container('shell') {
-                    script {
-                        docker.build("image:build_${env.BUILD_ID}", ".")
-                    }
+                    sh 'docker build --tag "image:build_${env.BUILD_ID}"'
                     // sh 'sleep 3000'
                     sh 'docker images'
                 }

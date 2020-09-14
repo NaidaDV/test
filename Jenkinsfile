@@ -1,5 +1,5 @@
 pipeline {
-    agent master
+    agent any
     tools {
         nodejs "nodejs 14"
     }

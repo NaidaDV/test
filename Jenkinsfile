@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage ('Build artifact') {
             steps {
-                container('ubuntu') {
+                container('docker') {
                     git 'https://github.com/americans007/react-app'
                     sh 'npm install'
                     sh 'npm run build'

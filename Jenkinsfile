@@ -6,7 +6,7 @@ pipeline {
     }
 
     tools {
-        nodejs "nodejs 14.10.1"
+        nodejs "nodejs"
         docker "docker"
     }
 

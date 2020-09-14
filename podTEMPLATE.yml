@@ -3,14 +3,12 @@ kind: Pod
 spec:
   containers:
   - name: docker
-    image: docker
+    image: docker:latest
     command:
-    - sleep
-    args:
-    - infinity
+    - cat
+    tty: true
   - name: ubuntu
-    image: ubuntu
+    image: ubuntu:latest
     command:
-    - sleep
-    args:
-    - infinity
+    - cat
+    tty: true

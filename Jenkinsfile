@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile 'yaml-conf-for-kubernetes-plugin.yml'
+            yamlFile 'podTEMPLATE.yml'
         }
     }
 
@@ -14,16 +14,24 @@ pipeline {
         stage('Build artifact') {
             steps {
                 container('shell') {
-                git 'https://github.com/americans007/react-app'
-                sh 'npm install'
-                sh 'npm run build'
-                script {
-                docker.build("image:build_${env.BUILD_ID}", ".")
-                    
-                sh 'sleep 3000'
-                    }
+                    git 'https://github.com/americans007/react-app'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
-    }
+        
+        stage('Build image') {
+            steps {
+                container('shell') {
+                    script {
+                        docker.build("image:build_${env.BUILD_ID}", ".")
+                    }
+                    // sh 'sleep 3000'
+                    sh 'docker images'
+                    }
+                }
+            }
+        
+    
 }

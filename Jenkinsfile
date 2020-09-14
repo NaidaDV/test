@@ -1,21 +1,26 @@
 pipeline {
-    agent none
+    agent { 
+        kubernetes { 
+            yamlFile 'podTEMPLATE.yml' 
+        } 
+    }
+    
     tools {
         nodejs "nodejs 14"
     }
 
     stages {
         stage ('Build artifact') {
-            agent { label 'master' }
             steps {
+                container('ubuntu') {
                     git 'https://github.com/americans007/react-app'
                     sh 'npm install'
                     sh 'npm run build'
+                }
             }
         }
         
         stage ('Build image') {
-            agent { kubernetes { yamlFile 'podTEMPLATE.yml' } }
             steps {
                 container('docker') {
                     sh 'docker build --tag "image:build_${env.BUILD_ID}"'

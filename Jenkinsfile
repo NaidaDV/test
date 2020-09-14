@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-            yamlFile 'podTEMPLATE.yml'
-        }
-    }
-
+    agent none
     tools {
         nodejs "nodejs 14"
     }
@@ -19,6 +14,7 @@ pipeline {
         }
         
         stage('Build image') {
+            kubernetes { yamlFile 'podTEMPLATE.yml' }
             steps {
                 container('docker') {
                     sh 'docker build --tag "image:build_${env.BUILD_ID}"'

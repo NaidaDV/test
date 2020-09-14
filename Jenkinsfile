@@ -6,7 +6,7 @@ pipeline {
 
     stages {
         stage('Build artifact') {
-            agent { label '!master' }
+            agent { label 'master' }
             steps {
                     git 'https://github.com/americans007/react-app'
                     sh 'npm install'

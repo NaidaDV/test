@@ -65,9 +65,9 @@ spec:
                     sh 'ls'
                     git 'https://github.com/NaidaDV/test'
                     sh "docker build -t 'naidadv/kuber_homework:build_${env.BUILD_ID}' /home/jenkins/agent/workspace/homework"
-                    //withDockerRegistry([ 'https://registry.hub.docker.com/', registryCredential ]) {
-                    //    sh 'docker push "naidadv/kuber_homework:build_${env.BUILD_ID}"'
-                    //}
+                    withDockerRegistry([ 'https://registry.hub.docker.com/', registryCredential ]) {
+                    sh 'docker push "naidadv/kuber_homework:build_${env.BUILD_ID}"'
+                    }
                 }
             }
         }

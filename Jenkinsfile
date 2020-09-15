@@ -19,7 +19,7 @@ pipeline {
 
     stages {
         stage('build') {
-            tools {nodejs "nodejs"}
+            tools {nodejs "nodejs 14"}
             steps {
                 container ('ubuntu'){
                 git 'https://github.com/americans007/react-app'

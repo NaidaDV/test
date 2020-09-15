@@ -12,11 +12,10 @@ pipeline {
     }
 
 
-  //  environment {
- //     registry = "mariiamarkina/devopshomework"
-  //    registryCredential = 'dockerhubCred'
- //     dockerImage = ""
-  //  }
+    environment {
+      registry = "naidadv/kuber_homework"
+      registryCredential = 'doc-hub-cred'
+    }
 
     stages {
         stage('build') {
@@ -34,9 +33,9 @@ pipeline {
                 container('docker'){
                     sh 'ls'
                     git 'https://github.com/NaidaDV/test'
-                    sh 'docker build -t "naidadv/courses_homework2:build_${env.BUILD_ID}" /home/jenkins/agent/workspace/Homework'
-                    withDockerRegistry([ credentialsId: "dockerhubCred", url: "https://registry.hub.docker.com/" ]) {
-                        sh 'docker push "naidadv/courses_homework2:build_${env.BUILD_ID}"'
+                    sh 'docker build -t "naidadv/kuber_homework:build_${env.BUILD_ID}" /home/jenkins/agent/workspace/Homework'
+                    withDockerRegistry([ 'https://registry.hub.docker.com/', registryCredential ]) {
+                        sh 'docker push "naidadv/kuber_homework:build_${env.BUILD_ID}"'
                     }
                 }
             }

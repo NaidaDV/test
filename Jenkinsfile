@@ -11,7 +11,10 @@ pipeline {
         skipDefaultCheckout true
     }
 
-
+    tools {
+        nodejs "nodejs 14.10.1"
+    } 
+    
     environment {
       registry = "naidadv/kuber_homework"
       registryCredential = 'doc-hub-cred'
@@ -19,7 +22,6 @@ pipeline {
 
     stages {
         stage('build') {
-            tools {nodejs "nodejs 14"}
             steps {
                 container ('ubuntu'){
                 git 'https://github.com/americans007/react-app'

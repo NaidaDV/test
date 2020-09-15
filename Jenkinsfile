@@ -4,7 +4,37 @@ pipeline {
         kubernetes {
             label 'jenkins-ci-jenkins-slave'
             defaultContainer 'jnlp'
-            yamlFile 'podTEMPLATE.yml'
+            yaml 
+'''
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    job: build-service
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: repository
+      mountPath: /root/.m2/repository
+  - name: docker
+    image: docker:18.09.2
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: repository
+    persistentVolumeClaim:
+      claimName: repository
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+'''
         }
     }
     options {

@@ -66,13 +66,15 @@ spec:
                     git 'https://github.com/NaidaDV/test'
                     sh "docker build -t 'naidadv/kuber_homework:build_${env.BUILD_ID}' /home/jenkins/agent/workspace/homework"
                     sh 'docker logout'
-                    withDockerRegistry([ credentialsId: "doc-hub-cred", url: "https://registry.hub.docker.com/" ]) {
-                    sh "docker push 'naidadv/kuber_homework:build_${env.BUILD_ID}'"
+                    withCredentials([usernamePassword(credentialsId: 'doc-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh "echo pass $PASSWORD"
+                        sh "echo user $USERNAME"
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
                     }
+                    sh "docker push 'naidadv/kuber_homework:build_${env.BUILD_ID}'"
                 }
             }
         }
     }
 }
-                  //  sh 'docker build --tag "image:build_${env.BUILD_ID}"'
   

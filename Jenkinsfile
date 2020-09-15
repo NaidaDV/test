@@ -33,10 +33,10 @@ pipeline {
             steps { 
                 container('docker'){
                     sh 'ls'
-                    git 'http://github.com/MariiaMarkina/KubernetesHmv'
-                    sh 'docker build -t mariiamarkina/devopshomework:kubepipeline /home/jenkins/agent/workspace/Homework'
+                    git 'https://github.com/NaidaDV/test'
+                    sh 'docker build -t "naidadv/courses_homework2:build_${env.BUILD_ID}" /home/jenkins/agent/workspace/Homework'
                     withDockerRegistry([ credentialsId: "dockerhubCred", url: "https://registry.hub.docker.com/" ]) {
-                        sh 'docker push  mariiamarkina/devopshomework:kubepipeline'
+                        sh 'docker push "naidadv/courses_homework2:build_${env.BUILD_ID}"'
                     }
                 }
             }

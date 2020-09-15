@@ -2,10 +2,9 @@ pipeline {
 
     agent {
         kubernetes {
-            label 'jenkins-ci-jenkins-slave'
+            label 'build-service-pod'
             defaultContainer 'jnlp'
-            yaml 
-'''
+            yaml '''
 apiVersion: v1
 kind: Pod
 metadata:

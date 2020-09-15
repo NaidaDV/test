@@ -8,6 +8,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y
 # Deleting default nginx page
 RUN rm /var/www/html/*.html
 # Copying artifact to nginx
-COPY ./build/* /var/www/html
+COPY ./build/* /var/www/html/
 # Starting nginx
 CMD ["nginx", "-g", "daemon off;"]

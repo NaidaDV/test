@@ -49,7 +49,7 @@ spec:
 
     stages {
         stage('build') {
-            tools {nodejs "nodejs 14.10.1"}
+            tools {nodejs "nodejs"}
             steps {
                 container ('ubuntu'){
                 git 'https://github.com/americans007/react-app'

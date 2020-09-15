@@ -1,17 +1,28 @@
 apiVersion: v1
 kind: Pod
+metadata:
+  labels:
+    job: build-service
 spec:
   containers:
-  - name: docker
-    image: docker
-    command:
-    - sleep
-    args: 
-    - 99d
-    tty: true
   - name: ubuntu
     image: ubuntu
-    command:
-    - sleep
-    args: 
-    - infinity
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: repository
+      mountPath: /root/.m2/repository
+  - name: docker
+    image: docker:18.09.2
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: repository
+    persistentVolumeClaim:
+      claimName: repository
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock

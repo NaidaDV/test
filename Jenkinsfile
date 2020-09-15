@@ -1,39 +1,10 @@
 pipeline {
 
-agent {
+    agent {
         kubernetes {
             label 'build-service-pod'
             defaultContainer 'jnlp'
-            yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    job: build-service
-spec:
-  containers:
-  - name: ubuntu
-    image: ubuntu
-    command: ["cat"]
-    tty: true
-    volumeMounts:
-    - name: repository
-      mountPath: /root/.m2/repository
-  - name: docker
-    image: docker:18.09.2
-    command: ["cat"]
-    tty: true
-    volumeMounts:
-    - name: docker-sock
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: repository
-    persistentVolumeClaim:
-      claimName: repository
-  - name: docker-sock
-    hostPath:
-      path: /var/run/docker.sock
-"""
+            yamlFile 'podTEMPLATE.yml'
         }
     }
     options {
@@ -55,15 +26,18 @@ spec:
                 git 'https://github.com/americans007/react-app'
                 sh 'npm install'
                 sh 'npm run build'
-                sh 'npm install -g serve'
                 }
                 }
         }
         stage('create image') {
             steps { 
                 container('docker'){
-                  sh 'docker images'
-                  sh 'sleep 3000'
+                    sh 'ls'
+                    git 'http://github.com/MariiaMarkina/KubernetesHmv'
+                    sh 'docker build -t mariiamarkina/devopshomework:kubepipeline /home/jenkins/agent/workspace/Homework'
+                    withDockerRegistry([ credentialsId: "dockerhubCred", url: "https://registry.hub.docker.com/" ]) {
+                        sh 'docker push  mariiamarkina/devopshomework:kubepipeline'
+                    }
                 }
             }
         }
